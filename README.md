@@ -200,7 +200,7 @@ Now all you have to do is set the token in Authorization header as a Bearer toke
     
 In the Postman UI:
 
-![Call Release API with token](doc/release-api-with-token.png)
+![Call Release API with token](doc/call-release-api-with-token.png)
 
 And we get a familiar looking result:
 
