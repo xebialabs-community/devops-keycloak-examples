@@ -1,0 +1,20 @@
+version: '2.3'
+services:
+
+  xl-release:
+    build: docker/xl-release
+    ports:
+      - 5516:5516
+    environment:
+      ADMIN_PASSWORD: admin
+      SERVER_URL: http://xl-release:5516
+
+  keycloak:
+    build: docker/keycloak
+    ports:
+      - 8080:8080
+      - 9990:9990
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+
