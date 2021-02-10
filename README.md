@@ -5,9 +5,10 @@ Setup with Digital.ai and Keycloak.
 Work-in-progress.
 
 **TODO**
+
 * Add user info like user email in canned JSON for user Alice.
-* Define custom Audience mapper
 * Client Scope mapping: only allow developers
+* Xl apply users.yaml for Deploy
 
 
 ## General setup
@@ -43,28 +44,33 @@ The demo comes with a preconfigured client setup that works out-of-the-box, but 
 
 Got the **Clients** and press **Create**
 
-For the client id, choose `digitalai-release`.
-Client ID: `openid-connect`
-Root ID: _leave empty_
+Fill in the following values:
+
+* **Client id**: `digitalai-release`.
+* **Client ID**: `openid-connect`
+* **Root ID**: _leave empty_
 
 Note: Release connects to Keycloak through the OIDC protocol and has no SAML support. If you want to connect to SAML you wil have to do so through Keycloak.
 Also, Keycloak has tons of options and it is bewildering at first. We will not explain every field in this demo.
 
 Now edit the newly created client and fill in the following:
 
-Access Type: `confidential`
+* **Access Type**: `confidential`
 
 This will enable a client secret that we need to pass to do Release server.
 
-Valid redirect URIs: `http://localhost:5516/oidc-login`
+* **Valid redirect URIs**: `http://localhost:5516/oidc-login`
 
 This is the URI of the Digital.ai Release server. It is localhost because we are running it in Docker. 
  
-In **Authentication Flow Overrides** set Direct Grant Flow to `direct grant`. 
+In **Authentication Flow Overrides** set 
+
+* **Direct Grant Flow**: `direct grant`. 
 
 Digital.ai Release needs some user information from Keycloak, like email addresses. You can configure this under **Mappers**
 
 Select the following mappers by selecting **Add Builtin**. You can select more than one before applying.
+
 * `username`
 * `email`
 * `given name`
@@ -100,8 +106,8 @@ Open the file and you will see a snippet under `xl.security.auth.providers.oidc`
 
 There are two values that need to be edited here
 
-* clientId: `digitalai-release`  
-* clientSecret: _some long crypto string_
+* **clientId**: `digitalai-release`  
+* **clientSecret**: _some long crypto string_
   
 For the clientSecret go into the Keycloak console and navigate to Clients < digitalai-release > Credentials and copy the value from the **Secret** field.
 
@@ -121,7 +127,7 @@ This is all that was needed. Now let's restart the server. In the demo you can d
  
  ## Go GitHub!
  
- Now let's leverage the pwoer of Keycloak. It's all fine to manage user and roles but let's do something more advanced that comes with Keycloak out-of-the-box and would have cost us some headache to develop.
+ Now let's leverage the power of Keycloak. It's all fine to manage user and roles but let's do something more advanced that comes with Keycloak out-of-the-box and would have cost us some headache to develop.
  
  Log in with GitHub.
  
@@ -143,21 +149,21 @@ This is all that was needed. Now let's restart the server. In the demo you can d
  
     $ ngrok http 8080
     
-  And copy to URL to the homepage URL field. Stop the process when done with the demo. Note: you will need to configure GitHub when you start ngrok again because it will give you a different URL.iuiofrd
+And copy to URL to the homepage URL field. Stop the process when done with the demo. Note: you will need to configure GitHub when you start ngrok again because it will give you a different URL.iuiofrd
   
-  **Authorization callback URL** is published by Keycloak. Simply copy it from Identity Providers > GitHub page > Redirect URI
+**Authorization callback URL** is published by Keycloak. Simply copy it from Identity Providers > GitHub page > Redirect URI.
   
-  On the next page, copy the Client ID into Keycloak.
-  Then create a new secret and also copy it into Keycloak.
+On the next page, copy the Client ID into Keycloak.
+Then create a new secret and also copy it into Keycloak.
   
-  That's it! Save the page in Keycloak and reload the login page. 
-  There is a 'Login with GitHub' button and it Just Works. How cool is that!
+That's it! Save the page in Keycloak and reload the login page. 
+There is a 'Login with GitHub' button and it Just Works. How cool is that!
   
-  You can also use identity providers to connect to Office 365 for example. You will  need to speak to your sysadmin to get hold of the Client ID and Client Secret, but the idea is the same.
+You can also use identity providers to connect to Office 365 for example. You will  need to speak to your sysadmin to get hold of the Client ID and Client Secret, but the idea is the same.
   
 ## Token authorization
 
-We will now leverage the pwoer of Keycloak to enable token access to the API. We don't have to touch Release for this!
+We will now leverage the power of Keycloak to enable token access to the API. We don't have to touch Release for this!
 
 We need to add an **Audience** mapper to make this work.
 
@@ -212,5 +218,6 @@ And we get a familiar looking result:
 ----
 
 **Remarks**
+
 * OAuth is finicky -- you will need an expert
 * OKTA is worse than this!
