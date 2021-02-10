@@ -9,6 +9,13 @@ services:
       ADMIN_PASSWORD: admin
       SERVER_URL: http://xl-release:5516
 
+  xl-deploy:
+    build: docker/xl-deploy
+    ports:
+      - 4516:4516
+    environment:
+      ADMIN_PASSWORD: admin
+
   keycloak:
     build: docker/keycloak
     ports:

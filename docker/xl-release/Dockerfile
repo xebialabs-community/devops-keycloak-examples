@@ -1,4 +1,3 @@
-# Offical
 FROM xebialabs/xl-release:10.0
 
 # Install license
