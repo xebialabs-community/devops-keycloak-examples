@@ -6,10 +6,9 @@ Work-in-progress.
 
 **TODO**
 
-* Add user info like user email in canned JSON for user Alice.
 * Client Scope mapping: only allow developers
-* Xl apply users.yaml for Deploy
-
+* Turn off Spring session. Session timeoutlogger
+* Rename reference.conf
 
 ## General setup
 
@@ -57,7 +56,7 @@ Now edit the newly created client and fill in the following:
 
 * **Access Type**: `confidential`
 
-This will enable a client secret that we need to pass to do Release server.
+This will enable a client secret that we need to pass to the Release server.
 
 * **Valid redirect URIs**: `http://localhost:5516/oidc-login`
 
@@ -115,37 +114,37 @@ This is all that was needed. Now let's restart the server. In the demo you can d
 
     $ ./restart-release-server.sh
     
- Do NOT restart Keycloak, because the setup is not persistent!
+Do NOT restart Keycloak, because the setup is not persistent!
+
+Wait until Release starts up (browse the logs)
+
+Now go to the regular login page and you will be redirected to Keycloak!
+
+Log in with alice/alice.
+
+Note that you can 'theme' the login page.
  
- Wait until Release starts up (browse the logs)
+## Go GitHub!
  
- Now go to the regular login page and you will be redirected to Keycloak!
+Now let's leverage the power of Keycloak. It's all fine to manage user and roles but let's do something more advanced that comes with Keycloak out-of-the-box and would have cost us some headache to develop.
  
- Log in with alice/alice.
+Log in with GitHub.
+
+It's easy to configure. Let's go into Keycloak and select **Identity Providers**
+
+From the list, add **GitHub**
+
+Now Keycloak is a client and needs the Client ID and Client Seceret from GitHub.
+
+Go to GitHub > You > Settings > Developer Settings > OAuth Apps
+
+Create a new app here and fill in a handful of required properties.
+
+* **Application name**: `Keycloak demo`
  
- Note that you can 'theme' the login page.
+Homepage URL: GitHub lives in the public internet and needs to find Keycloak that is now (hopefully) running behind a firewall. In order to make a connection, we can punch a hole in the firewall with the `ngrok` utility. This is only for demo purposes! 
  
- ## Go GitHub!
- 
- Now let's leverage the power of Keycloak. It's all fine to manage user and roles but let's do something more advanced that comes with Keycloak out-of-the-box and would have cost us some headache to develop.
- 
- Log in with GitHub.
- 
- It's easy to configure. Let's go into Keycloak and select **Identity Providers**
- 
- From the list, add **GitHub**
- 
- Now Keycloak is a client and needs the Client ID and Client Seceret from GitHub.
- 
- Go to GitHub > You > Settings > Developer Settings > OAuth Apps
- 
- Create a new app here and fill in a handful of required properties.
- 
- Application name: `Keycloak demo`
- 
- Homepage URL: GitHub lives in the public internet and needs to find Keycloak that is now (hopefully) running behind a firewall. In order to make a connection, we can punch a hole in the firewall with the `ngrok` utility. This is only for demo purposes! 
- 
- Try
+Try
  
     $ ngrok http 8080
     
@@ -169,9 +168,9 @@ We need to add an **Audience** mapper to make this work.
 
 Go to Clients > Digitalai Release > Mappers and now press **Create**
 
-Name: `audience` 
-Mapper type: `Audience` (select form dropdown) 
-Included client audience: `digitalai-release`. Note that this only works for one client at the time. 
+* **Name**: `audience` 
+* **Mapper type**: `Audience` (select form dropdown) 
+* **Included client audience**: `digitalai-release`. Note that this only works for one client at the time. 
 
 ### Test it!
 
@@ -214,6 +213,35 @@ And we get a familiar looking result:
 
 
     
+## Demo notes
+
+### Exporting the Keycloak configuration
+
+Changes to the Keycloak are not persistent in the demo  after removing and adding the Keycloak container. This section describes how to export the configuration changes so they are picked up when restarting the demo.  
+
+The Keycloack configuration can be exported from The UI, but unfortunately the export is not complete and lacks secrets.
+
+In order to get a complete export, we need to start the Keycloak process with a special parameter and capture the export file that is then being generated.
+
+You can do this with the following Docker command while Keycloak is running
+
+    docker exec -it release-keycloak-examples_keycloak_1 /opt/jboss/keycloak/bin/standalone.sh \
+    -Djboss.socket.binding.port-offset=100 \
+    -Dkeycloak.migration.action=export \
+    -Dkeycloak.migration.provider=singleFile \
+    -Dkeycloak.migration.realmName=digitalai-platform \
+    -Dkeycloak.migration.usersExportStrategy=REALM_FILE \
+    -Dkeycloak.migration.file=/tmp/digitalai-platform-realm.json
+
+Kill the instance with `^C` once it has started. You can wait for this message in the logs that says:
+
+    WFLYSRV0051: Admin console listening on http://127.0.0.1:10090
+
+Now copy the exported file from the Docker container into your demo setup
+
+    docker cp release-keycloak-examples_keycloak_1:/tmp/digitalai-platform-realm.json docker/keycloak/realm-xlr/
+
+Now the changes will be picked up when recreating the Keycloak container.
 
 ----
 
