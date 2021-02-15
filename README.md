@@ -1,18 +1,33 @@
 # Digital.ai Release with Keycloak
 
-Setup with Digital.ai and Keycloak.
+Demo that walks you through the steps to set up Digital.ai Release and Deploy with Keycloak.
 
-Work-in-progress.
+Highlights:
 
-**TODO**
-
-* Client Scope mapping: only allow developers
-* Turn off Spring session. Session timeoutlogger
-* Rename reference.conf
+* Single sign-on for Release and Deploy
+* Log in with GitHub
+* Token access for API calls
 
 ## General setup
 
-## Configure Keycloak
+### Docker
+You need to have Docker installed on your machine before you begin.
+
+* Mac: https://docs.docker.com/docker-for-mac/
+* Windows: https://docs.docker.com/docker-for-windows/
+* Linux: Refer to the instructions for your Linux distribution on how to install Docker
+
+### Licenses
+
+You need to bring your own XebiaLabs licenses and copy them to the following places
+
+* `docker/xl-deploy/default-conf/deployit-license.lic`
+* `docker/xl-release/default-conf/xl-release-license.lic`
+
+License files are in `.gitignore` to prevent them from being committed.
+
+
+## 1. Configure Keycloak
 
 This largely follows the setps explained in the manual: [Configure OpenID Connect (OIDC) authentication with Keycloak](https://docs.xebialabs.com/v.10.0/release/concept/release-oidc-with-keycloak/)
 
@@ -77,7 +92,7 @@ Select the following mappers by selecting **Add Builtin**. You can select more t
 * `groups`
 * `realm roles`
 
-## Configure Digital.ai Release
+## 2. Configure Digital.ai Release
 
 We quickly toured to bare minimum to set up Keycloak for user authentication. Now let's configure Digital.ai Release to do logins through Keycloak.
 
@@ -91,7 +106,7 @@ We need to do the following
 The demo comes prepackaged with the right plugin but in general do the following.
 
 Download the corresponding version of the `xlr-auth-oidc-plugin.jar` from our distribution site http://dist.xebialabs.com/ (Requires login)
-Install it in the `plugins/__local__` directory and remove the other auth plugin. THey are not mutually compatible. 
+Install it in the `plugins/__local__` directory and remove the other auth plugin. They are not mutually compatible. 
 
 Take a look at the [Dockerfile](dockker/xl-release/Dockerfile) to see how to do it in Docker.
 
@@ -123,8 +138,23 @@ Now go to the regular login page and you will be redirected to Keycloak!
 Log in with alice/alice.
 
 Note that you can 'theme' the login page.
- 
-## Go GitHub!
+
+## 3. SSO
+
+Single-sign on (SSO) is easy to enable. We simply need to configure another client for Deploy. The steps are similar for Release but are slightly different in the details. Please refer to the [Configure OIDC authentication with Keycloak](https://docs.xebialabs.com/v.10.0/deploy/concept/deploy-oidc-with-keycloak/) manual for Deploy and follow the instructions. Be careful with copy/pasting snippets from the Release setup.
+
+The demo comes with a Deploy client already preconfigured, so SSO already works!
+
+Except for one additional thing... we need to enable login permissions for Deploy users. Release does not have this explicit permission, anyone with access can login.
+
+We use Devops as-code Yaml files to configure Deploy. Run the following command that will add a role Developers, map it to the `oidc-developers` Keycloak group and give it login permission.
+
+    ./xlw apply -f docker/xl-deploy/enable-developer-login.yaml
+
+Now go to http://localhost:4516 and you are already logged in as Alice!
+
+
+## 4. Go GitHub!
  
 Now let's leverage the power of Keycloak. It's all fine to manage user and roles but let's do something more advanced that comes with Keycloak out-of-the-box and would have cost us some headache to develop.
  
@@ -160,7 +190,7 @@ There is a 'Login with GitHub' button and it Just Works. How cool is that!
   
 You can also use identity providers to connect to Office 365 for example. You will  need to speak to your sysadmin to get hold of the Client ID and Client Secret, but the idea is the same.
   
-## Token authorization
+## 5. Token authorization
 
 We will now leverage the power of Keycloak to enable token access to the API. We don't have to touch Release for this!
 
@@ -213,7 +243,7 @@ And we get a familiar looking result:
 
 
     
-## Demo notes
+## Appendix: Demo notes
 
 ### Exporting the Keycloak configuration
 
@@ -249,3 +279,8 @@ Now the changes will be picked up when recreating the Keycloak container.
 
 * OAuth is finicky -- you will need an expert
 * OKTA is worse than this!
+
+**TODO**
+
+* Client Scope mapping: only allow developers
+* Turn off Spring session. Session timeoutlogger
