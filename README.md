@@ -26,6 +26,20 @@ You need to bring your own XebiaLabs licenses and copy them to the following pla
 
 License files are in `.gitignore` to prevent them from being committed.
 
+### Start & stop
+
+Start all Docker containers:
+
+    $ ./up.sh
+
+To restart Release or Deploy only:
+
+    $ ./restart-release-server.sh
+    $ ./restart-deploy-server.sh
+
+To tear down the entire demo:
+
+    $ ./down.sh
 
 ## 1. Configure Keycloak
 
