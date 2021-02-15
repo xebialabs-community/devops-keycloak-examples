@@ -243,7 +243,7 @@ And we get a familiar looking result:
 
 
     
-## Appendix: Demo notes
+## Appendix
 
 ### Exporting the Keycloak configuration
 
@@ -255,7 +255,7 @@ In order to get a complete export, we need to start the Keycloak process with a 
 
 You can do this with the following Docker command while Keycloak is running
 
-    docker exec -it release-keycloak-examples_keycloak_1 /opt/jboss/keycloak/bin/standalone.sh \
+    docker exec -it devops-keycloak-examples_keycloak_1 /opt/jboss/keycloak/bin/standalone.sh \
     -Djboss.socket.binding.port-offset=100 \
     -Dkeycloak.migration.action=export \
     -Dkeycloak.migration.provider=singleFile \
@@ -269,7 +269,7 @@ Kill the instance with `^C` once it has started. You can wait for this message i
 
 Now copy the exported file from the Docker container into your demo setup
 
-    docker cp release-keycloak-examples_keycloak_1:/tmp/digitalai-platform-realm.json docker/keycloak/realm-xlr/
+    docker cp devops-keycloak-examples_keycloak_1:/tmp/digitalai-platform-realm.json docker/keycloak/realm-xlr/
 
 Now the changes will be picked up when recreating the Keycloak container.
 
