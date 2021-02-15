@@ -11,4 +11,5 @@ spec:
   - global:
       - role: Developers
         permissions:
+          - login
           - admin

@@ -8,4 +8,4 @@ RUN rm -f /opt/xebialabs/xl-release-server/default-plugins/xlr-official/xlr-auth
 COPY default-plugins /opt/xebialabs/xl-release-server/default-plugins
 
 # Keycloak configuration
-COPY default-conf/reference.conf /opt/xebialabs/xl-release-server/default-conf/
+COPY default-conf/xl-release.conf /opt/xebialabs/xl-release-server/default-conf/reference.conf
