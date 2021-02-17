@@ -21,8 +21,8 @@ You need to have Docker installed on your machine before you begin.
 
 You need to bring your own XebiaLabs licenses and copy them to the following places
 
-* `docker/xl-deploy/default-conf/deployit-license.lic`
-* `docker/xl-release/default-conf/xl-release-license.lic`
+* `docker/xl-deploy/conf/deployit-license.lic`
+* `docker/xl-release/conf/xl-release-license.lic`
 
 License files are in `.gitignore` to prevent them from being committed.
 
@@ -51,7 +51,7 @@ Log in with admin/admin.
 
 ### Realm and users
 
-This demo ships with a default Realm already in place: Digitalai-platform.
+This demo ships with a default Realm already in place: **Digitalai-platform**.
 
 We will use this realm to configure users and identity providers for the Digital.ai products like Release and Deploy.
 
@@ -74,11 +74,11 @@ Got the **Clients** and press **Create**
 
 Fill in the following values:
 
-* **Client id**: `digitalai-release`.
+* **Client id**: `digitalai-release`
 * **Client ID**: `openid-connect`
 * **Root ID**: _leave empty_
 
-Note: Release connects to Keycloak through the OIDC protocol and has no SAML support. If you want to connect to SAML you wil have to do so through Keycloak.
+Note: Release connects to Keycloak through the OIDC protocol and has no SAML support. If you want to connect to SAML you wil have to do so through Keycloak. 
 Also, Keycloak has tons of options and it is bewildering at first. We will not explain every field in this demo.
 
 Now edit the newly created client and fill in the following:
@@ -112,8 +112,8 @@ We quickly toured to bare minimum to set up Keycloak for user authentication. No
 
 We need to do the following
 
-* Install the `xlr-auth-oidc-plugin` (and remove the default auth plugin)
-* Configure Keycloak in `conf/xl-release.conf`
+1. Install the `xlr-auth-oidc-plugin` (and remove the default auth plugin)
+2. Configure Keycloak in `conf/xl-release.conf`
 
 ### Installing the auth plugin
 
@@ -128,7 +128,7 @@ Take a look at the [Dockerfile](dockker/xl-release/Dockerfile) to see how to do 
 
 Note that the the demo works out of the box with the canned setup. For the sake of demonstration we will now chang the client to the one we just configured.
 
-Because the demo is in Docker we do it slightly different than a regular server setup. Edit the file `docker/default-conf/reference.conf`. This equivalent to the `conf/xl-release.conf` file in a normal server installation.
+Because the demo is in Docker we do it slightly different than a regular server setup. Edit the file `docker/conf/xl-release.conf`. 
 
 Open the file and you will see a snippet under `xl.security.auth.providers.oidc`. In the case of a vanilla server installation you will need to copy this from the Digital.ai Release documentation.
 
