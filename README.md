@@ -153,6 +153,7 @@ Log in with alice/alice.
 
 Note that you can 'theme' the login page.
 
+
 ## 3. SSO
 
 Single-sign on (SSO) is easy to enable. We simply need to configure another client for Deploy. The steps are similar for Release but are slightly different in the details. Please refer to the [Configure OIDC authentication with Keycloak](https://docs.xebialabs.com/v.10.0/deploy/concept/deploy-oidc-with-keycloak/) manual for Deploy and follow the instructions. Be careful with copy/pasting snippets from the Release setup.
@@ -172,7 +173,7 @@ Now go to http://localhost:4516 and you are already logged in as Alice!
  
 Now let's leverage the power of Keycloak. It's all fine to manage user and roles but let's do something more advanced that comes with Keycloak out-of-the-box and would have cost us some headache to develop.
  
-Log in with GitHub.
+We will enable to log in with your GitHub account.
 
 It's easy to configure. Let's go into Keycloak and select **Identity Providers**
 
@@ -186,23 +187,27 @@ Create a new app here and fill in a handful of required properties.
 
 * **Application name**: `Keycloak demo`
  
-Homepage URL: GitHub lives in the public internet and needs to find Keycloak that is now (hopefully) running behind a firewall. In order to make a connection, we can punch a hole in the firewall with the `ngrok` utility. This is only for demo purposes! 
+* **Homepage URL:** _A URL from GitHub to Keycloak_
+  
+GitHub lives in the public internet and needs to find Keycloak that is now (hopefully) running behind a firewall. In order to make a connection, we can punch a hole in the firewall with the `ngrok` utility. This is only for demo purposes! 
  
 Try
  
     $ ngrok http 8080
     
-And copy to URL to the homepage URL field. Stop the process when done with the demo. Note: you will need to configure GitHub when you start ngrok again because it will give you a different URL.iuiofrd
+And copy to URL to the homepage URL field. Stop the process when done with the demo. Note: you will need to configure GitHub when you start ngrok again because it will give you a different URL.
   
-**Authorization callback URL** is published by Keycloak. Simply copy it from Identity Providers > GitHub page > Redirect URI.
+* **Authorization callback URL**:  _Copy it from Keycloak: Identity Providers > GitHub page > Redirect URI._
   
-On the next page, copy the Client ID into Keycloak.
-Then create a new secret and also copy it into Keycloak.
+On the next page, copy the **Client ID** into Keycloak.
+Then create a new **Secret** and copy it into Keycloak as well.
   
 That's it! Save the page in Keycloak and reload the login page. 
+
 There is a 'Login with GitHub' button and it Just Works. How cool is that!
   
 You can also use identity providers to connect to Office 365 for example. You will  need to speak to your sysadmin to get hold of the Client ID and Client Secret, but the idea is the same.
+
   
 ## 5. Token authorization
 
@@ -281,20 +286,10 @@ Kill the instance with `^C` once it has started. You can wait for this message i
 
     WFLYSRV0051: Admin console listening on http://127.0.0.1:10090
 
-Now copy the exported file from the Docker container into your demo setup
+Copy the exported file from the Docker container into your demo setup
 
     docker cp devops-keycloak-examples_keycloak_1:/tmp/digitalai-platform-realm.json docker/keycloak/realm-xlr/
 
-Now the changes will be picked up when recreating the Keycloak container.
+The changes will be picked up when recreating the Keycloak container.
 
-----
 
-**Remarks**
-
-* OAuth is finicky -- you will need an expert
-* OKTA is worse than this!
-
-**TODO**
-
-* Client Scope mapping: only allow developers
-* Turn off Spring session. Session timeoutlogger
