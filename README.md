@@ -2,11 +2,13 @@
 
 Demo that walks you through the steps to set up Digital.ai Release and Deploy with Keycloak.
 
-Highlights:
+**Highlights**
 
 * Single sign-on for Release and Deploy
 * Log in with GitHub
 * Token access for API calls
+
+The demo is based on Digital Release / Deploy 10.0.0
 
 ## General setup
 
