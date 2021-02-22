@@ -1,6 +1,6 @@
 # Digital.ai Release with Keycloak
 
-Demo that walks you through the steps to set up Digital.ai Release and Deploy with Keycloak.
+This demo walks you through the steps to set up Digital.ai Release and Deploy with Keycloak.
 
 **Highlights**
 
@@ -9,6 +9,8 @@ Demo that walks you through the steps to set up Digital.ai Release and Deploy wi
 * Token access for API calls
 
 The demo is based on Digital Release / Deploy 10.0.0
+
+There's also a video of this demo: [watch the recording here](https://digital.ai/resources/customer-content/online-customer-meetup-advanced-authentication-with-keycloak).
 
 ## General setup
 
@@ -95,7 +97,7 @@ This is the URI of the Digital.ai Release server. It is localhost because we are
  
 In **Authentication Flow Overrides** set 
 
-* **Direct Grant Flow**: `direct grant`. 
+* **Direct Grant Flow**: `direct grant`
 
 Digital.ai Release needs some user information from Keycloak, like email addresses. You can configure this under **Mappers**
 
