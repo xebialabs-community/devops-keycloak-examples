@@ -10,7 +10,7 @@ This demo walks you through the steps to set up Digital.ai Release and Deploy wi
 
 The demo is based on Digital Release / Deploy 10.0.0
 
-There's also a video of this demo: [watch the recording here](https://digital.ai/resources/customer-content/online-customer-meetup-advanced-authentication-with-keycloak).
+There's also a [video recoding of this demo](https://digital.ai/resources/customer-content/online-customer-meetup-advanced-authentication-with-keycloak). The [demo slides](doc/Advanced Authentication with Digital.ai Release and Keycloak.pptx) are included in doc directory of this repository.
 
 ## General setup
 
