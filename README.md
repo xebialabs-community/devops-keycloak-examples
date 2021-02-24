@@ -1,6 +1,6 @@
-# Digital.ai Release with Keycloak
+# Digital.ai Release and Deploy with Keycloak
 
-This demo walks you through the steps to set up Digital.ai Release and Deploy with Keycloak.
+This demo walks you through the steps to set up Digital.ai Release and Deploy with Keycloak and experiment with some cool features around authentication.
 
 **Highlights**
 
@@ -47,9 +47,13 @@ To tear down the entire demo:
 
 ## 1. Configure Keycloak
 
-This largely follows the setps explained in the manual: [Configure OpenID Connect (OIDC) authentication with Keycloak](https://docs.xebialabs.com/v.10.0/release/concept/release-oidc-with-keycloak/)
+The Docker setup comes with Keycloak integration for Release and Deploy out of the box.
 
-Go to http://localhost:8080 and click on **Administration Console**.
+The demo walks you through setting up a connection between Release and Keycloak from scratch again, before going into advanced usage scenarios. 
+
+The setup party largely follows the steps explained in the manual: [Configure OpenID Connect (OIDC) authentication with Keycloak](https://docs.xebialabs.com/v.10.0/release/concept/release-oidc-with-keycloak/)
+
+To enter Keycloak, go to http://localhost:8080 and click on **Administration Console**.
 
 Log in with admin/admin.
 
