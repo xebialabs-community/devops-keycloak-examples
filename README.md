@@ -51,11 +51,17 @@ The Docker setup comes with Keycloak integration for Release and Deploy out of t
 
 The demo walks you through setting up a connection between Release and Keycloak from scratch again, before going into advanced usage scenarios. 
 
-The setup party largely follows the steps explained in the manual: [Configure OpenID Connect (OIDC) authentication with Keycloak](https://docs.xebialabs.com/v.10.0/release/concept/release-oidc-with-keycloak/)
+The setup largely follows the steps explained in the manual: 
+* **Release**: [Configure OpenID Connect (OIDC) authentication with Keycloak](https://docs.xebialabs.com/v.10.0/release/concept/release-oidc-with-keycloak/)
+* **Deploy**: [Configure OpenID Connect (OIDC) authentication with Keycloak](https://docs.xebialabs.com/v.10.0/deploy/concept/deploy-oidc-with-keycloak/)
+
+_Note:_ There are subtle differences in the configuration between Release and Deploy. This demo will focus on Release. Setup for Deploy is similar, but please do follow the manual when you start playing with Deploy.
+
 
 To enter Keycloak, go to http://localhost:8080 and click on **Administration Console**.
 
 Log in with admin/admin.
+
 
 ### Realm and users
 
