@@ -10,7 +10,7 @@ This demo walks you through the steps to set up Digital.ai Release and Deploy wi
 
 The demo is based on Digital Release / Deploy 10.0.0
 
-There's also a [video recoding of this demo](https://player.vimeo.com/video/514009963). The [demo slides](doc/Advanced%20Authentication%20with%20Digital.ai%20Release%20and%20Keycloak.pptx) are included in doc directory of this repository.
+There's also a [video recording of this demo](https://player.vimeo.com/video/514009963). The [demo slides](doc/Advanced%20Authentication%20with%20Digital.ai%20Release%20and%20Keycloak.pptx) are included in doc directory of this repository.
 
 ## General setup
 
@@ -88,8 +88,8 @@ Got the **Clients** and press **Create**
 
 Fill in the following values:
 
-* **Client id**: `digitalai-release`
-* **Client ID**: `openid-connect`
+* **Client ID**: `digitalai-release`
+* **Client Protocol**: `openid-connect`
 * **Root ID**: _leave empty_
 
 Note: Release connects to Keycloak through the OIDC protocol and has no SAML support. If you want to connect to SAML you wil have to do so through Keycloak. 
