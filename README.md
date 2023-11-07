@@ -26,7 +26,6 @@ You need to have Docker installed on your machine before you begin.
 You need to bring your own XebiaLabs licenses and copy them to the following places
 
 * `docker/xl-deploy/conf/deployit-license.lic`
-* `docker/xl-release/conf/xl-release-license.lic`
 
 License files are in `.gitignore` to prevent them from being committed.
 
@@ -44,6 +43,21 @@ To restart Release or Deploy only:
 To tear down the entire demo:
 
     $ ./down.sh
+
+### Hosts
+
+Add the following entry to your `/etc/hosts` file
+
+    127.0.0.1 xl-release
+
+## 0. Quick demo
+
+The demo comes with a preconfigured client setup that works out-of-the-box
+
+Go to http://localhost:5516 to access the Release server, and you will be redirected to the Keycloak login.
+
+Login with the sample user `alice` with password `alice`.
+
 
 ## 1. Configure Keycloak
 
@@ -82,7 +96,8 @@ Click on user Alice and go into **Role Mappings**. You will see that Alice is a 
 
 A client in Keycloak is an application that connects to it and uses it for user management. In this case, Digital.ai Release.
 
-The demo comes with a preconfigured client setup that works out-of-the-box, but let's walk through the steps needed to confiugre the client and get going. You need to do this only once (in theory). After that, Keycloak will be mostly transparent, except for the login screen as we will see shortly.
+
+Now let's walk through the steps needed to configure the client and get going. You need to do this only once (in theory). After that, Keycloak will be mostly transparent, except for the login screen as we will see shortly.
 
 Got the **Clients** and press **Create**
 
@@ -126,25 +141,16 @@ We quickly toured to bare minimum to set up Keycloak for user authentication. No
 
 We need to do the following
 
-1. Install the `xlr-auth-oidc-plugin` (and remove the default auth plugin)
 2. Configure Keycloak in `conf/xl-release.conf`
 
-### Installing the auth plugin
-
-The demo comes prepackaged with the right plugin but in general do the following.
-
-Download the corresponding version of the `xlr-auth-oidc-plugin.jar` from our distribution site http://dist.xebialabs.com/ (Requires login)
-Install it in the `plugins/__local__` directory and remove the other auth plugin. They are not mutually compatible. 
-
-Take a look at the [Dockerfile](dockker/xl-release/Dockerfile) to see how to do it in Docker.
 
 ### Configuring xl-release-conf
 
-Note that the the demo works out of the box with the canned setup. For the sake of demonstration we will now chang the client to the one we just configured.
+Note that the demo works out of the box with the canned setup. For the sake of demonstration we will now chang the client to the one we just configured.
 
-Because the demo is in Docker we do it slightly different than a regular server setup. Edit the file `docker/conf/xl-release.conf`. 
+Because the demo is in Docker we do it slightly different from a regular server setup. Edit the file `docker/conf/xl-release.conf`. 
 
-Open the file and you will see a snippet under `xl.security.auth.providers.oidc`. In the case of a vanilla server installation you will need to copy this from the Digital.ai Release documentation.
+Open the file, and you will see a snippet under `xl.security.auth.providers.oidc`. In the case of a vanilla server installation you will need to copy this from the Digital.ai Release documentation.
 
 There are two values that need to be edited here
 
@@ -223,7 +229,7 @@ There is a 'Login with GitHub' button and it Just Works. How cool is that!
 You can also use identity providers to connect to Office 365 for example. You will  need to speak to your sysadmin to get hold of the Client ID and Client Secret, but the idea is the same.
 
   
-## 5. Token authorization
+## 5. API access with Token authorization
 
 We will now leverage the power of Keycloak to enable token access to the API. We don't have to touch Release for this!
 
@@ -239,7 +245,7 @@ Go to Clients > Digitalai Release > Mappers and now press **Create**
 
 Let's use Postman. You can also use curl or any other HTTP client -- that's the point.
 
-It's a two step plan
+It's a two-step plan
 
 1. Get the access token
 2. Call the API with the token as authetnitcation, not using username/password.

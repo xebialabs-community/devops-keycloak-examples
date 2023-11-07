@@ -8,6 +8,7 @@ services:
     environment:
       ADMIN_PASSWORD: admin
       SERVER_URL: http://xl-release:5516
+      ACCEPT_EULA: Y
 
   xl-deploy:
     build: docker/xl-deploy
