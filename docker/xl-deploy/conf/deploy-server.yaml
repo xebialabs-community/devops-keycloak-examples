@@ -1,0 +1,7 @@
+deploy.server:
+  security:
+    auth:
+      provider: "oidc"
+
+  license:
+    daysBeforeWarning: 1

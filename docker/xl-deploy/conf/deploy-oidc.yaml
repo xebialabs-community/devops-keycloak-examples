@@ -1,0 +1,16 @@
+deploy.security:
+  auth:
+    providers:
+     oidc:
+      loginMethodDescription: Login using Keycloak
+      clientId: deploy
+      clientSecret: "2c89c720-009c-428f-b815-4e488674176c"
+      issuer: http://localhost:8080/auth/realms/digitalai-platform
+      keyRetrievalUri: http://keycloak:8080/auth/realms/digitalai-platform/protocol/openid-connect/certs
+      accessTokenUri: http://keycloak:8080/auth/realms/digitalai-platform/protocol/openid-connect/token
+      userAuthorizationUri: http://localhost:8080/auth/realms/digitalai-platform/protocol/openid-connect/auth
+      logoutUri: http://localhost:8080/auth/realms/digitalai-platform/protocol/openid-connect/logout
+      redirectUri: http://localhost:4516/login/external-login
+      postLogoutRedirectUri: http://localhost:4516/login/external-login
+      rolesClaimName: groups
+      userNameClaimName: preferred_username
